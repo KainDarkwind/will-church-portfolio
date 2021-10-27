@@ -1,45 +1,75 @@
 import React from "react";
+import starIcon from "../icon/star.svg";
+import linkIcon from "../icon/link.svg";
 
-function Project(props) {
-   console.log(props);
+export default function Project(props) {
+   console.log("The props we passed from the parent component:", props);
    return (
-      <div className="row">
-         <div className="col-lg-12">
-            <a className="text-reset" href={props.project.youtubeUrl}>
+      <>
+         <div className="mt-5 col-12">
+            <a
+               className="text-reset text-decoration-none"
+               href={props.project.youtubeUrl}
+            >
                <h3 className="font-weight-normal">{props.project.title}</h3>
             </a>
          </div>
-
          <div className="col-md-4 col-12">
-            <a href={props.project.youtubeUrl}>
+            <a className="text-reset" href={props.project.youtubeUrl}>
                <img
-                  src={props.project.image}
+                  src={require("../image/" + props.project.image)}
                   className="img-fluid"
                   width="500px"
-                  alt="Youtube preview"
+                  alt="Video Preview"
                />
             </a>
          </div>
-         <div className="col-md-8 col-12">
+
+         <div className="col-12 col-md-8">
             <a
-               className="text-decoration-none text-reset"
+               className="text-reset text-decoration-none"
                href={props.project.youtubeUrl}
             >
                <p>
-                  Rating: {props.project.rating} {props.project.desc} (
-                  {props.project.totalMinutes} min)
+                  <img
+                     src={starIcon}
+                     className="mr-1 d-inline-block"
+                     width="18px"
+                     alt="star icon"
+                  />
+                  <img
+                     src={starIcon}
+                     className="mr-1 d-inline-block"
+                     width="18px"
+                     alt="star icon"
+                  />
+                  <img
+                     src={starIcon}
+                     className="mr-1 d-inline-block"
+                     width="18px"
+                     alt="star icon"
+                  />
+                  <img
+                     src={starIcon}
+                     className="mr-1 d-inline-block"
+                     width="18px"
+                     alt="star icon"
+                  />
+                  <img
+                     src={starIcon}
+                     className="mr-1 d-inline-block"
+                     width="18px"
+                     alt="star icon"
+                  />
+                  {props.project.desc} ({props.project.totalMinutes} min)
                </p>
                <p>{props.project.postedAt}</p>
             </a>
-            <div className="d-inline col-12">
-               <img src="icon/link.svg" alt="" className="mr-1" width="15px" />
-               <a href={props.project.githubUrl}>
-                  https://github.com/KainDarkwind/k...
-               </a>
+            <div className="d-inline col-md-4 col-12">
+               <img src={linkIcon} className="mr-1" width="15px" alt="" />
+               <a href={props.project.githubUrl}>{props.project.githubUrl}</a>
             </div>
          </div>
-      </div>
+      </>
    );
 }
-
-export default Project;
