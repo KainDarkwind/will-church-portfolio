@@ -1,9 +1,15 @@
 import React from "react";
 import starIcon from "../icon/star.svg";
 import linkIcon from "../icon/link.svg";
+import image from "../image/kronos-prototype-walkthrough.webp";
+
+function truncate(str, length) {
+   return str.slice(0, length) + "...";
+}
 
 export default function Project(props) {
    console.log("The props we passed from the parent component:", props);
+   console.log(`../image/${props.project.image}`);
    return (
       <>
          <div className="mt-5 col-12">
@@ -17,10 +23,11 @@ export default function Project(props) {
          <div className="col-md-4 col-12">
             <a className="text-reset" href={props.project.youtubeUrl}>
                <img
-                  src={require("../image/" + props.project.image)}
+                  src={image}
+                  // {require("../image/" + props.project.image)}
                   className="img-fluid"
                   width="500px"
-                  alt="Video Preview"
+                  alt={props.project.title}
                />
             </a>
          </div>
@@ -66,8 +73,10 @@ export default function Project(props) {
                <p>{props.project.postedAt}</p>
             </a>
             <div className="d-inline col-md-4 col-12">
-               <img src={linkIcon} className="mr-1" width="15px" alt="" />
-               <a href={props.project.githubUrl}>{props.project.githubUrl}</a>
+               <a href={props.project.githubUrl}>
+                  <img src={linkIcon} className="mr-1" width="15px" alt="" />
+                  {truncate(props.project.githubUrl, 33)}
+               </a>
             </div>
          </div>
       </>

@@ -25,7 +25,6 @@ export default function Home() {
                         <a
                            className="d-inline-block"
                            href="https://github.com/KainDarkwind"
-                           d-inline-block
                         >
                            <img
                               src={githubLogo}
