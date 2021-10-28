@@ -2,12 +2,26 @@ import React from "react";
 import starIcon from "../icon/star.svg";
 import linkIcon from "../icon/link.svg";
 import image from "../image/kronos-prototype-walkthrough.webp";
-
-function truncate(str, length) {
-   return str.slice(0, length) + "...";
-}
+import { truncate } from "../utils/helpers";
+import formatDate from "date-fns/format";
 
 export default function Project(props) {
+   const rating = props.project.rating;
+   function displayStars() {
+      let stars = [];
+      for (let i = 0; i < rating; i++) {
+         stars = stars.concat(
+            <img
+               src={starIcon}
+               className="mr-1 d-inline-block"
+               width="18px"
+               alt="star icon"
+               key={i}
+            />
+         );
+      }
+      return stars;
+   }
    console.log("The props we passed from the parent component:", props);
    console.log(`../image/${props.project.image}`);
    return (
@@ -38,39 +52,10 @@ export default function Project(props) {
                href={props.project.youtubeUrl}
             >
                <p>
-                  <img
-                     src={starIcon}
-                     className="mr-1 d-inline-block"
-                     width="18px"
-                     alt="star icon"
-                  />
-                  <img
-                     src={starIcon}
-                     className="mr-1 d-inline-block"
-                     width="18px"
-                     alt="star icon"
-                  />
-                  <img
-                     src={starIcon}
-                     className="mr-1 d-inline-block"
-                     width="18px"
-                     alt="star icon"
-                  />
-                  <img
-                     src={starIcon}
-                     className="mr-1 d-inline-block"
-                     width="18px"
-                     alt="star icon"
-                  />
-                  <img
-                     src={starIcon}
-                     className="mr-1 d-inline-block"
-                     width="18px"
-                     alt="star icon"
-                  />
+                  {displayStars()}
                   {props.project.desc} ({props.project.totalMinutes} min)
                </p>
-               <p>{props.project.postedAt}</p>
+               <p>{formatDate(props.project.postedAt, "MMM. d, yyyy")}</p>
             </a>
             <div className="d-inline col-md-4 col-12">
                <a href={props.project.githubUrl}>
