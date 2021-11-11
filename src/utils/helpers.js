@@ -23,3 +23,12 @@ export function displayStars(rating) {
    }
    return stars;
 }
+
+export function safelyParseJson(str) {
+   try {
+      JSON.parse(str);
+   } catch {
+      return str;
+   }
+   return JSON.parse(str);
+}

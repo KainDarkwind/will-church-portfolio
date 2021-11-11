@@ -5,6 +5,7 @@ import Project from "./Project";
 import Bio from "./Bio";
 import { projects } from "../data/projects";
 import _ from "lodash";
+import { safelyParseJson } from "../utils/helpers";
 
 export default class Home extends React.Component {
    constructor(props) {
@@ -14,7 +15,7 @@ export default class Home extends React.Component {
       });
       //imagine we are returning filtered results from an API
       const defaultOrder = '["postedAt", "desc"]';
-      const params = JSON.parse(defaultOrder);
+      const params = safelyParseJson(defaultOrder);
       const orderedProjects = _.orderBy(activeProjects, ...params);
       this.state = {
          activeProjects: orderedProjects,
@@ -23,6 +24,20 @@ export default class Home extends React.Component {
          searchInput: "",
          projectOrder: defaultOrder,
       };
+   }
+
+   updateState(e) {
+      let value = e.target.value;
+      // eslint-disable-next-line
+      if (value === "true" || value === "false" || value == Number(value)) {
+         value = safelyParseJson(value);
+      }
+
+      this.setState({ [e.target.name]: value });
+
+      //const partialState = {};
+      //partialState.key = value;
+      //this.setState(partialState);
    }
 
    setIsAdvanced() {
@@ -68,7 +83,7 @@ export default class Home extends React.Component {
 
    setProjectOrder(e) {
       const projectOrder = e.target.value;
-      const params = JSON.parse(projectOrder);
+      const params = safelyParseJson(projectOrder);
       this.setState((prevState) => {
          return {
             projectOrder: projectOrder,
@@ -115,17 +130,18 @@ this.setState({ projectOrder: e.target.value });
                         >
                            <input
                               type="checkbox"
-                              name="advancedview"
+                              name="isAdvanced"
+                              id="isAdvanced"
                               className="custom-control-input"
-                              id="advancedview"
                               checked={this.state.isAdvanced}
-                              onChange={() => {
-                                 this.setIsAdvanced();
+                              value={!this.state.isAdvanced}
+                              onChange={(e) => {
+                                 this.updateState(e);
                               }}
                            />
                            <label
                               className="custom-control-label"
-                              htmlFor="advancedview"
+                              htmlFor="isAdvanced"
                            >
                               Advanced View
                            </label>
