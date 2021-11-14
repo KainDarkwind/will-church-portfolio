@@ -4,8 +4,8 @@ import Project from "./Project";
 
 import Bio from "./Bio";
 import { projects } from "../data/projects";
-import _ from "lodash";
 import { safelyParseJson } from "../utils/helpers";
+import orderBy from "lodash/orderBy";
 
 export default class Home extends React.Component {
    constructor(props) {
@@ -16,7 +16,7 @@ export default class Home extends React.Component {
       //imagine we are returning filtered results from an API
       const defaultOrder = '["postedAt", "desc"]';
       const params = safelyParseJson(defaultOrder);
-      const orderedProjects = _.orderBy(activeProjects, ...params);
+      const orderedProjects = orderBy(activeProjects, ...params);
       this.state = {
          activeProjects: orderedProjects,
          isAdvanced: false,
@@ -40,15 +40,15 @@ export default class Home extends React.Component {
       //this.setState(partialState);
    }
 
-   setIsAdvanced() {
-      //this.setState({isAdvanced: !this.state.isAdvanced});
+   // setIsAdvanced() {
+   //    //this.setState({isAdvanced: !this.state.isAdvanced});
 
-      if (this.state.isAdvanced) {
-         this.setState({ isAdvanced: false });
-      } else {
-         this.setState({ isAdvanced: true });
-      }
-   }
+   //    if (this.state.isAdvanced) {
+   //       this.setState({ isAdvanced: false });
+   //    } else {
+   //       this.setState({ isAdvanced: true });
+   //    }
+   // }
 
    // setSearchInput(e) {
    //    console.log(e.target.value);
@@ -65,18 +65,28 @@ export default class Home extends React.Component {
 
    setSearchInput(e) {
       const searchInput = e.target.value;
+      const order = this.state.projectOrder;
+
+      const params = safelyParseJson(order);
+      const orderedProp = params[0];
+      const sortedOrder = params[1];
       this.setState((prevState) => {
+         const filteredProjects = prevState.activeProjects.filter((project) => {
+            const normalizedSearchInput = searchInput.toLowerCase();
+            const normalizedTitle = project.title.toLowerCase();
+            const normalizedDesc = project.desc.toLowerCase();
+            return (
+               normalizedTitle.includes(normalizedSearchInput) ||
+               normalizedDesc.includes(normalizedSearchInput)
+            );
+         });
          return {
             searchInput: searchInput,
-            displayedProjects: prevState.activeProjects.filter((project) => {
-               const normalizedSearchInput = searchInput.toLowerCase();
-               const normalizedTitle = project.title.toLowerCase();
-               const normalizedDesc = project.desc.toLowerCase();
-               return (
-                  normalizedTitle.includes(normalizedSearchInput) ||
-                  normalizedDesc.includes(normalizedSearchInput)
-               );
-            }),
+            displayedProjects: orderBy(
+               filteredProjects,
+               orderedProp,
+               sortedOrder
+            ),
          };
       });
    }
@@ -87,10 +97,7 @@ export default class Home extends React.Component {
       this.setState((prevState) => {
          return {
             projectOrder: projectOrder,
-            displayedProjects: _.orderBy(
-               prevState.displayedProjects,
-               ...params
-            ),
+            displayedProjects: orderBy(prevState.displayedProjects, ...params),
          };
       });
    }

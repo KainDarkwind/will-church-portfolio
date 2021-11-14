@@ -39,7 +39,7 @@ export const projects = [
       id: "e74abb7e-5680-10dc-1f0j-0242fv374889",
       title: "Validation of Fake Stuff",
       rating: 4,
-      desc: "A fake object to demonstrate the radio button functionality",
+      desc: "Z fake object to demonstrate the radio button functionality",
       totalMinutes: 10,
       postedAt: 707100033000,
       githubUrl: "https://github.com/KainDarkwind/khronos.git",
