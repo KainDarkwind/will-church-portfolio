@@ -45,6 +45,6 @@ export const projects = [
       githubUrl: "https://github.com/KainDarkwind/khronos.git",
       image: "kronos-prototype-fakethrough.webp",
       youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      isActive: true,
+      isActive: false,
    },
 ];

@@ -32,7 +32,7 @@ export default function Bio() {
 
                   <a
                      className="mx-5 d-inline-block"
-                     href="https://www.linkedin.com/in/will-church-b69b8a3b/"
+                     href="https://www.linkedin.com/in/wchurch3/"
                      target="_blank"
                      rel="noreferrer"
                   >
